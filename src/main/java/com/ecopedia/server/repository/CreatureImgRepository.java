@@ -10,5 +10,7 @@ import java.util.Optional;
 public interface CreatureImgRepository extends JpaRepository<CreatureImg, Long> {
 
     Optional<CreatureImg> findByCreature(Creature creature);
+
+    Optional<CreatureImg> findFirstByCreatureIdx(Long creatureIdx);
 }
 
