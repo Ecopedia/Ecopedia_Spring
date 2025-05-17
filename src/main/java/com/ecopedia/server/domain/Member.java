@@ -18,7 +18,7 @@ public class Member extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idx;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String nickname;
 
     @Column(nullable = false)
@@ -28,10 +28,5 @@ public class Member extends BaseEntity {
 
     private Integer point;
 
-    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
-    private List<Donation> donations = new ArrayList<>();
-
-    @OneToOne(mappedBy = "member", fetch = FetchType.LAZY)
-    private Book book;
 
 }

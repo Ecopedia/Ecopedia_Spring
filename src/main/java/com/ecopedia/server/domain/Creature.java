@@ -9,9 +9,8 @@ import lombok.*;
 @Getter
 @Builder
 @AllArgsConstructor
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Creature {
-
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

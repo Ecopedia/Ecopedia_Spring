@@ -21,6 +21,4 @@ public class Book {
     @JoinColumn(name = "member_idx", unique = true, nullable = false)
     private Member member;
 
-    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL)
-    private List<Creature> creatures = new ArrayList<>();
 }
