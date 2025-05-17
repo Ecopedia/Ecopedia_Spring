@@ -17,7 +17,7 @@ public class VerifyImageService {
     private static final String OPENAI_API_KEY = "sk-proj-UhXobRwk2HqhgaUEaLG26CoZarmX_LPsjMpTxwG9OaBSPOm0be-Y5DH14Wbjp9epEOEDL6eM5XT3BlbkFJSPEG8rCSr6VKymkFUW6SclJH4V8ndlwGL4FM4j6VLJ3DsU78iWXAFF_MSnY0jnyjTktJ3OZnQ";
     private static final String OPENAI_API_URL = "https://api.openai.com/v1/chat/completions";
     private static final String OPENAI_MODEL = "gpt-4o";
-    private static final String OPENAI_PROMPT = "이 이미지의 사진이 식물, 곤충 이라면 { \"category\": \"식물\" or \"곤충\", name: \"식물이나 곤충의 한국어 이름\", description: \"해당 식물, 곤충의 설명\" } 정보를 리턴해주고 만약 식물, 곤충이 아니라면 { \"category\": \"\", name: \"\", description: \"\" } 형태를 리턴해줘";
+    private static final String OPENAI_PROMPT = "이 이미지의 사진이 식물, 곤충 이라면 { \"category\": \"식물\" or \"곤충\", name: \"식물이나 곤충의 한국어 이름\", description: \"해당 식물, 곤충의 설명\" } 와 같이 정보를 JSON 형식으로 리턴해주고 만약 식물, 곤충이 아니라면 { \"category\": \"\", name: \"\", description: \"\" } 형태의 빈 문자열을 가진 JSON 데이터를 리턴해줘";
     private static final RestTemplate restTemplate = new RestTemplate();
 
     public VerifyImageReturnDto verifyImage(String cloudImageUrl) {
