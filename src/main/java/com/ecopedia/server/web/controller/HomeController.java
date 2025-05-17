@@ -1,11 +1,8 @@
 package com.ecopedia.server.web.controller;
 
 import com.ecopedia.server.apiPayload.ApiResponse;
-import com.ecopedia.server.domain.Member;
-import com.ecopedia.server.global.auth.JwtAuthInterceptor;
 import com.ecopedia.server.service.HomeService;
 import com.ecopedia.server.web.dto.HomeResponseDto;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
