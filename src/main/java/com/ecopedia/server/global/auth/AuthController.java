@@ -1,5 +1,7 @@
 package com.ecopedia.server.global.auth;
 
+import com.ecopedia.server.apiPayload.code.status.ErrorStatus;
+import com.ecopedia.server.apiPayload.exception.handler.ErrorHandler;
 import com.ecopedia.server.global.auth.authDto.LoginRequest;
 import com.ecopedia.server.global.auth.authDto.SignupRequest;
 import com.ecopedia.server.repository.MemberRepository;
@@ -15,7 +17,7 @@ import com.ecopedia.server.domain.Member;
 import java.util.Collections;
 
 @RestController
-@RequestMapping("/auth")
+@RequestMapping
 @RequiredArgsConstructor
 public class AuthController {
 
@@ -29,7 +31,10 @@ public class AuthController {
     @PostMapping("/signup")
     public ResponseEntity<?> signup(@RequestBody SignupRequest request) {
         if (memberRepository.findByNickname(request.getNickname()).isPresent()) {
-            return ResponseEntity.badRequest().body("이미 존재하는 닉네임입니다.");
+            throw new ErrorHandler(ErrorStatus.NICKNAME_ALREADY_EXIST);
+        }
+        if (request.getNickname().length() > 10) {
+            throw new ErrorHandler(ErrorStatus.NICKNAME_LENGTH_TOO_LONG);
         }
 
         String hashedPassword = passwordUtil.hashPassword(request.getPassword());
@@ -40,7 +45,7 @@ public class AuthController {
                 .build();
 
         memberRepository.save(member);
-        return ResponseEntity.ok("회원가입 성공");
+        return ResponseEntity.ok("회원가입성공");
     }
 
     /**
@@ -51,8 +56,12 @@ public class AuthController {
         Member member = memberRepository.findByNickname(request.getNickname())
                 .orElse(null);
 
-        if (member == null || !passwordUtil.verifyPassword(request.getPassword(), member.getPassword())) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("닉네임 또는 비밀번호가 틀렸습니다.");
+        if (member == null) {
+            throw new ErrorHandler(ErrorStatus.MEMBER_NOT_FOUND);
+        }
+
+        if (!passwordUtil.verifyPassword(request.getPassword(), member.getPassword())) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("비밀번호가 틀렸습니다.");
         }
 
         String token = jwtUtil.generateToken(member.getNickname());
