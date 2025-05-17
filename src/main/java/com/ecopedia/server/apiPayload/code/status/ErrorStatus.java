@@ -33,6 +33,7 @@ public enum ErrorStatus implements BaseErrorCode {
 
     // 생명관련
     CREATURE_NOT_FOUND(HttpStatus.BAD_REQUEST, "CREATUREY4001", "존재하지 않는 생물입니다."),
+    CREATURE_DUPLICATION(HttpStatus.CONFLICT, "CREATURE4002", "이미 도감에 존재하는 생물입니다."),
 
 
     // jwt
