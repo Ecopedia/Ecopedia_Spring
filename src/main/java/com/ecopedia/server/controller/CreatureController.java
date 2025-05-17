@@ -67,10 +67,14 @@ public class CreatureController {
             // 2. OpenAI Vision 분석
             VerifyImageReturnDto result = verifyImageService.verifyImage(s3Dto.getImageUrl());
 
+            System.out.println("VerifyImageReturnDto 객체 생성");
+
             if (result.getCategory().isEmpty() || result.getName().isEmpty() || result.getDescription().isEmpty()) {
                 s3ImageService.deleteFile(s3Dto.getImageKey());
                 throw new ErrorHandler(ErrorStatus.AI_ANALYSIS_FAILED);
             }
+
+            System.out.println("각 필드 빈 값 검증 완료");
 
             // 3. DB 내에 동일한 book 내 동일 크리처가 존재하는지
             Member member = memberUtil.getMemberFromToken(authHeader);
@@ -121,14 +125,16 @@ public class CreatureController {
             // 2. OpenAI Vision 분석
             VerifyImageReturnDto result = verifyImageService.verifyImage(s3Dto.getImageUrl());
 
-            System.out.println("result.getName()" + result.getName());
-            System.out.println("result.getCategory()" + result.getCategory());
-            System.out.println("result.getDescription()" + result.getDescription());
+            System.out.println("result.getName() >>> " + result.getName());
+            System.out.println("result.getCategory() >>> " + result.getCategory());
+            System.out.println("result.getDescription() >>> " + result.getDescription());
 
             if (result.getCategory().isEmpty() || result.getName().isEmpty() || result.getDescription().isEmpty()) {
                 s3ImageService.deleteFile(s3Dto.getImageKey());
                 throw new ErrorHandler(ErrorStatus.AI_ANALYSIS_FAILED);
             }
+
+            System.out.println("이미지 빈 값 검증 완료");
 
             // 3. DB 내에 동일한 book 내 동일 크리처가 존재하는지
             Member member = memberUtil.getMemberFromToken(authHeader);

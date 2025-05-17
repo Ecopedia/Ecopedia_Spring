@@ -80,6 +80,8 @@ public class VerifyImageService {
             String name = contentJson.get("name").asText();
             String description = contentJson.get("description").asText();
 
+            System.out.println("category, name, description 생성");
+
             returnDto.setCategory(category);
             returnDto.setName(name);
             returnDto.setDescription(description);
