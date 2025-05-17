@@ -36,7 +36,7 @@ public class CreatureService {
     private final LocationRepository locationRepository;
     private final LocationService locationService;
 
-    public void saveCreature(String authHeader, CreatureSaveRequestDto dto) {
+    public void saveCreature(String authHeader, CreatureSaveRequestDto dto, Double latitude, Double longitude) {
         Member member = memberUtil.getMemberFromToken(authHeader);
 
         Book book = bookRepository.findByMemberIdx(member.getIdx())
@@ -51,6 +51,9 @@ public class CreatureService {
         ;
         Location saveLoc = locationRepository.save(location);
 
+        System.out.println("saveLoc 저장 완료");
+        System.out.println("dto.getCategory() >>>> " + dto.getCategory());
+
         // 1. Creature 저장
         Creature creature = Creature.builder()
                 .creatureName(dto.getCreatureName())
@@ -58,8 +61,12 @@ public class CreatureService {
                 .category(CreatureCategory.valueOf(dto.getCategory().toUpperCase()))
                 .location(saveLoc)
                 .book(book)
+                .latitude(latitude)
+                .longitude(longitude)
                 .build();
         creatureRepository.save(creature);
+
+        System.out.println("크리처 저장 완료");
 
         // 2. CreatureImg 저장
         CreatureImg creatureImg = CreatureImg.builder()
@@ -68,6 +75,8 @@ public class CreatureService {
                 .creature(creature)
                 .build();
         creatureImgRepository.save(creatureImg);
+
+        System.out.println("크리처 이미지 저장 완료");
     }
 
 
