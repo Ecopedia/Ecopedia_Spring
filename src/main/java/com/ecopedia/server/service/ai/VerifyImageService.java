@@ -14,7 +14,7 @@ import java.util.Map;
 
 @Service
 public class VerifyImageService {
-    private static final String OPENAI_API_KEY = "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";
+    private static final String OPENAI_API_KEY = "sk-proj-UhXobRwk2HqhgaUEaLG26CoZarmX_LPsjMpTxwG9OaBSPOm0be-Y5DH14Wbjp9epEOEDL6eM5XT3BlbkFJSPEG8rCSr6VKymkFUW6SclJH4V8ndlwGL4FM4j6VLJ3DsU78iWXAFF_MSnY0jnyjTktJ3OZnQ";
     private static final String OPENAI_API_URL = "https://api.openai.com/v1/chat/completions";
     private static final String OPENAI_MODEL = "gpt-4.1-mini";
     private static final String OPENAI_PROMPT = "이 이미지의 사진이 식물, 곤충 이라면 { \"category\": \"식물\" or \"곤충\", name: \"식물이나 곤충의 한국어 이름\", description: \"해당 식물, 곤충의 설명\" } 정보를 리턴해주고 만약 식물, 곤충이 아니라면 { \"category\": \"\", name: \"\", description: \"\" } 형태를 리턴해줘";
@@ -43,7 +43,7 @@ public class VerifyImageService {
 
         // HTTP 요청
         HttpHeaders headers = new HttpHeaders();
-        headers.setBearerAuth(OPENAI_API_KEY);
+        headers.setBearerAuth(OPENAI_API_KEY + "A");
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<Map<String,Object>> entity = new HttpEntity<>(requestBody, headers);
 
