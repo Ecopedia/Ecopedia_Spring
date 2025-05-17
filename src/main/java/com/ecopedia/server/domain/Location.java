@@ -10,7 +10,7 @@ import java.util.List;
 @Getter
 @Builder
 @AllArgsConstructor
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Location {
 
     @Id
@@ -20,8 +20,5 @@ public class Location {
     private String gu;
 
     private String dong;
-
-    @OneToMany(mappedBy = "location")
-    List<Creature> creatures = new ArrayList<>();
 
 }

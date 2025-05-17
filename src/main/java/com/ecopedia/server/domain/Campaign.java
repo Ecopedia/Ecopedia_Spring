@@ -24,7 +24,5 @@ public class Campaign extends BaseEntity {
     @Column(nullable = false, columnDefinition = "TEXT")
     private String description;
 
-    @OneToMany(mappedBy = "campaign", cascade = CascadeType.ALL)
-    private List<Donation> donations = new ArrayList<>();
 }
 
