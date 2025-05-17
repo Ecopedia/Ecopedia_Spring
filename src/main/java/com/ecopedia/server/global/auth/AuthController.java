@@ -61,7 +61,7 @@ public class AuthController {
         }
 
         if (!passwordUtil.verifyPassword(request.getPassword(), member.getPassword())) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("비밀번호가 틀렸습니다.");
+            throw new ErrorHandler(ErrorStatus.);
         }
 
         String token = jwtUtil.generateToken(member.getNickname());

@@ -22,7 +22,8 @@ public enum ErrorStatus implements BaseErrorCode {
     // 회원가입, 로그인
     MEMBER_NOT_FOUND(HttpStatus.BAD_REQUEST, "MEMBER4001", "유저가 존재하지 않습니다."),
     NICKNAME_ALREADY_EXIST(HttpStatus.BAD_REQUEST, "MEMBER4002", "동일한 닉네임이 존재합니다."),
-    NICKNAME_LENGTH_TOO_LONG(HttpStatus.BAD_REQUEST, "MEMBER4003", "10글자 이내로 닉네임을 설정해주세요.")
+    NICKNAME_LENGTH_TOO_LONG(HttpStatus.BAD_REQUEST, "MEMBER4003", "10글자 이내로 닉네임을 설정해주세요."),
+    PASSWORD_WRONG(HttpStatus.BAD_REQUEST, "MEMBER4004", "비밀번호가 틀렸습니다.")
 
     ;
 
