@@ -67,10 +67,14 @@ public class CreatureController {
             // 2. OpenAI Vision 분석
             VerifyImageReturnDto result = verifyImageService.verifyImage(s3Dto.getImageUrl());
 
+            System.out.println("VerifyImageReturnDto 객체 생성");
+
             if (result.getCategory().isEmpty() || result.getName().isEmpty() || result.getDescription().isEmpty()) {
-                s3ImageService.deleteFile(s3Dto.imageKey);
+                s3ImageService.deleteFile(s3Dto.getImageKey());
                 throw new ErrorHandler(ErrorStatus.AI_ANALYSIS_FAILED);
             }
+
+            System.out.println("각 필드 빈 값 검증 완료");
 
             // 3. DB 내에 동일한 book 내 동일 크리처가 존재하는지
             Member member = memberUtil.getMemberFromToken(authHeader);
@@ -78,12 +82,12 @@ public class CreatureController {
             List<Creature> creatureByBookId = creatureRepository.findAllByBookId(bookByMemberIdx.get().getId());
             for(Creature c : creatureByBookId) {
                 if(c.getCreatureName().equals(result.getName())) {
-                    s3ImageService.deleteFile(s3Dto.imageKey);
+                    s3ImageService.deleteFile(s3Dto.getImageKey());
                     throw new ErrorHandler(ErrorStatus.CREATURE_DUPLICATION);
                 }
             }
             
-            s3ImageService.deleteFile(s3Dto.imageKey);
+            s3ImageService.deleteFile(s3Dto.getImageKey());
             
 
 //            LocationReturnDto locDto = locationService.getAdministrativeDong(Double.parseDouble(latitude), Double.parseDouble(longitude));
@@ -121,10 +125,16 @@ public class CreatureController {
             // 2. OpenAI Vision 분석
             VerifyImageReturnDto result = verifyImageService.verifyImage(s3Dto.getImageUrl());
 
+            System.out.println("result.getName() >>> " + result.getName());
+            System.out.println("result.getCategory() >>> " + result.getCategory());
+            System.out.println("result.getDescription() >>> " + result.getDescription());
+
             if (result.getCategory().isEmpty() || result.getName().isEmpty() || result.getDescription().isEmpty()) {
-                s3ImageService.deleteFile(s3Dto.imageKey);
+                s3ImageService.deleteFile(s3Dto.getImageKey());
                 throw new ErrorHandler(ErrorStatus.AI_ANALYSIS_FAILED);
             }
+
+            System.out.println("이미지 빈 값 검증 완료");
 
             // 3. DB 내에 동일한 book 내 동일 크리처가 존재하는지
             Member member = memberUtil.getMemberFromToken(authHeader);
@@ -132,26 +142,35 @@ public class CreatureController {
             List<Creature> creatureByBookId = creatureRepository.findAllByBookId(bookByMemberIdx.get().getId());
             for(Creature c : creatureByBookId) {
                 if(c.getCreatureName().equals(result.getName())) {
-                    s3ImageService.deleteFile(s3Dto.imageKey);
+                    s3ImageService.deleteFile(s3Dto.getImageKey());
                     throw new ErrorHandler(ErrorStatus.CREATURE_DUPLICATION);
                 }
             }
+
+            System.out.println("크리처 검증 완료");
 
             LocationReturnDto locDto = locationService.getAdministrativeDong(Double.parseDouble(latitude), Double.parseDouble(longitude));
 
             CreatureSaveRequestDto dto = CreatureSaveRequestDto.builder()
                     .creatureName(result.getName())
                     .creatureExplain(result.getDescription())
-                    .category(result.getName())
+                    .category(result.getCategory())
                     .latitude(Double.parseDouble(latitude))
                     .longitude(Double.parseDouble(longitude))
-                    .imageUrl(s3Dto.imageUrl)
-                    .imageKey(s3Dto.imageKey)
+                    .imageUrl(s3Dto.getImageUrl())
+                    .imageKey(s3Dto.getImageKey())
                     .build();
 
-            creatureService.saveCreature(authHeader, dto);
-            
+            System.out.println("빌더로 객체 생성");
+
+            creatureService.saveCreature(authHeader, dto, dto.getLatitude(), dto.getLongitude());
+
+            System.out.println("크리처 저장 완료");
+
             ImgDto imgDto = VerifyImgToImgConverter.verifyImgToImgConverter(result, locDto);
+
+            System.out.println("imgDto 생성 완료");
+
             return ResponseEntity.ok(ApiResponse.onSuccess(imgDto));
 
         } catch (IOException e) {
