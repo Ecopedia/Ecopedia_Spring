@@ -33,6 +33,11 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
+	// jwt
+	implementation 'com.auth0:java-jwt:4.4.0'
+
+	implementation 'at.favre.lib:bcrypt:0.9.0'
+
 	// validation
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 }
