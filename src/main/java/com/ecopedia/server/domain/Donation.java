@@ -23,6 +23,6 @@ public class Donation extends BaseEntity {
     private Member member;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "campain_idx", nullable = false)
-    private Campain campain;
+    @JoinColumn(name = "campaign_idx", nullable = false)
+    private Campaign campaign;
 }
