@@ -49,7 +49,8 @@ public class CreatureController {
     public ResponseEntity<?> uploadAndAnalyzeImage(
             @RequestHeader("Authorization") String authHeader,
             @RequestPart("file") MultipartFile file,
-            String latitude, String longitude) throws IOException {
+            @RequestPart("latitude") String latitude,
+            @RequestPart("longitude") String longitude) throws IOException {
         if (file.isEmpty()) {
             throw new ErrorHandler(ErrorStatus.INVALID_IMAGE_FILE);
         }
