@@ -40,3 +40,8 @@ dependencies {
 tasks.named('test') {
 	useJUnitPlatform()
 }
+
+// Railway 배포용 JAR 설정
+bootJar {
+	archiveFileName = 'app.jar' // Railway에서 실행할 jar 이름
+}
