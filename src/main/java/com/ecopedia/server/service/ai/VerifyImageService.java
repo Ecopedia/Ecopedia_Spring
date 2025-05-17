@@ -14,7 +14,7 @@ import java.util.Map;
 
 @Service
 public class VerifyImageService {
-    private static final String OPENAI_API_KEY = "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";
+    private static final String OPENAI_API_KEY = "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";
     private static final String OPENAI_API_URL = "https://api.openai.com/v1/chat/completions";
     private static final String OPENAI_MODEL = "gpt-4.1-mini";
     private static final String OPENAI_PROMPT = "이 이미지의 사진이 식물, 곤충 이라면 { \"category\": \"식물\" or \"곤충\", name: \"식물이나 곤충의 한국어 이름\", description: \"해당 식물, 곤충의 설명\" } 정보를 리턴해주고 만약 식물, 곤충이 아니라면 { \"category\": \"\", name: \"\", description: \"\" } 형태를 리턴해줘";
