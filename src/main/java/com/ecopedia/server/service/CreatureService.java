@@ -2,10 +2,7 @@ package com.ecopedia.server.service;
 
 import com.ecopedia.server.apiPayload.code.status.ErrorStatus;
 import com.ecopedia.server.apiPayload.exception.handler.ErrorHandler;
-import com.ecopedia.server.domain.Book;
-import com.ecopedia.server.domain.Creature;
-import com.ecopedia.server.domain.CreatureImg;
-import com.ecopedia.server.domain.Member;
+import com.ecopedia.server.domain.*;
 import com.ecopedia.server.domain.enums.CreatureCategory;
 import com.ecopedia.server.dto.RequestDto;
 import com.ecopedia.server.dto.ResponseDto;
@@ -13,8 +10,11 @@ import com.ecopedia.server.global.auth.MemberUtil;
 import com.ecopedia.server.repository.BookRepository;
 import com.ecopedia.server.repository.CreatureImgRepository;
 import com.ecopedia.server.repository.CreatureRepository;
+import com.ecopedia.server.repository.LocationRepository;
 import com.ecopedia.server.service.ai.VerifyImageService;
+import com.ecopedia.server.service.location.LocationService;
 import com.ecopedia.server.service.s3.S3ImageService;
+import com.ecopedia.server.web.dto.location.LocationReturnDto;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -33,6 +33,8 @@ public class CreatureService {
     private final BookRepository bookRepository;
     private final CreatureRepository creatureRepository;
     private final CreatureImgRepository creatureImgRepository;
+    private final LocationRepository locationRepository;
+    private final LocationService locationService;
 
     public void saveCreature(String authHeader, CreatureSaveRequestDto dto) {
         Member member = memberUtil.getMemberFromToken(authHeader);
@@ -40,13 +42,21 @@ public class CreatureService {
         Book book = bookRepository.findByMemberIdx(member.getIdx())
                 .orElseThrow(() -> new ErrorHandler(ErrorStatus.BOOK_NOT_FOUND));
 
+        LocationReturnDto administrativeDong = locationService.getAdministrativeDong(dto.getLatitude(), dto.getLongitude());
+        Location location = Location.builder()
+                .si(administrativeDong.getSido())
+                .gu(administrativeDong.getSigungu())
+                .dong(administrativeDong.getDong())
+                .build()
+        ;
+        Location saveLoc = locationRepository.save(location);
+
         // 1. Creature 저장
         Creature creature = Creature.builder()
                 .creatureName(dto.getCreatureName())
                 .creatureExplain(dto.getCreatureExplain())
                 .category(CreatureCategory.valueOf(dto.getCategory().toUpperCase()))
-                .latitude(dto.getLatitude())
-                .longitude(dto.getLongitude())
+                .location(saveLoc)
                 .book(book)
                 .build();
         creatureRepository.save(creature);
@@ -69,13 +79,20 @@ public class CreatureService {
                 .map(img -> img.getImageUrl())
                 .orElseThrow(() -> new ErrorHandler(ErrorStatus.INVALID_IMAGE_FILE));
 
+        // 위치 엔티티에서 시·구·동 추출
+        Location location = creature.getLocation();
+        if (location == null) {
+            throw new ErrorHandler(ErrorStatus.LOCATION_NOT_FOUND); // 필요 시 에러 추가
+        }
+
         return CreatureDetailResponseDto.builder()
                 .creatureIdx(creature.getIdx())
                 .creatureName(creature.getCreatureName())
                 .creatureExplain(creature.getCreatureExplain())
-                .latitude(creature.getLatitude())
-                .longitude(creature.getLongitude())
-                .category(creature.getCategory())
+                .category(creature.getCategory().name())
+                .si(location.getSi())
+                .gu(location.getGu())
+                .dong(location.getDong())
                 .imageUrl(imageUrl)
                 .build();
     }

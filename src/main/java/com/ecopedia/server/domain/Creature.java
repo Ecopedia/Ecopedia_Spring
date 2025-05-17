@@ -5,6 +5,9 @@ import com.ecopedia.server.domain.enums.CreatureCategory;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Getter
 @Builder
@@ -39,6 +42,8 @@ public class Creature {
     @JoinColumn(name = "location_idx")
     private Location location;
 
+    @OneToOne(mappedBy = "creature", cascade = CascadeType.ALL)
+    private CreatureImg creatureImg;
 
 }
 

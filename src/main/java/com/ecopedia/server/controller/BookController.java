@@ -7,6 +7,7 @@ import com.ecopedia.server.domain.Book;
 import com.ecopedia.server.domain.Creature;
 import com.ecopedia.server.domain.Member;
 import com.ecopedia.server.domain.enums.CreatureCategory;
+import com.ecopedia.server.dto.ResponseDto;
 import com.ecopedia.server.global.auth.MemberUtil;
 import com.ecopedia.server.repository.BookRepository;
 import com.ecopedia.server.repository.CreatureRepository;
@@ -16,6 +17,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
+import static com.ecopedia.server.dto.ResponseDto.*;
 
 @RequiredArgsConstructor
 @RestController
@@ -35,7 +38,7 @@ public class BookController {
         Member member = memberUtil.getMemberFromToken(authHeader);
         Book book = bookRepository.findByMemberIdx(member.getIdx())
                 .orElseThrow(() -> new ErrorHandler(ErrorStatus.BOOK_NOT_FOUND));
-        List<Creature> result;
+        List<Creature> creatures;
 
         if (categoryParam != null) {
             CreatureCategory category;
@@ -45,11 +48,24 @@ public class BookController {
                 throw new ErrorHandler(ErrorStatus.INVALID_CATEGORY);
             }
 
-            result = creatureRepository.findAllByBookIdAndCategory(book.getId(), category);
+            creatures = creatureRepository.findAllByBookIdAndCategory(book.getId(), category);
         } else {
-            result = creatureRepository.findAllByBookId(book.getId());
+            creatures = creatureRepository.findAllByBookId(book.getId());
         }
 
+        List<CreatureSummaryDto> result = creatures.stream()
+                .map(creature -> CreatureSummaryDto.builder()
+                        .idx(creature.getIdx())
+                        .creatureName(creature.getCreatureName())
+                        .creatureExplain(creature.getCreatureExplain())
+                        .category(creature.getCategory())
+                        .imageUrl(
+                                creature.getCreatureImg() != null
+                                        ? creature.getCreatureImg().getImageUrl()
+                                        : ""
+                        )
+                        .build())
+                .toList();
 
         return ResponseEntity.ok(ApiResponse.onSuccess(result));
     }

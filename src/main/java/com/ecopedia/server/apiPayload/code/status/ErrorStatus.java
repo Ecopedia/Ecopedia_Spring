@@ -33,6 +33,7 @@ public enum ErrorStatus implements BaseErrorCode {
 
     // 생명관련
     CREATURE_NOT_FOUND(HttpStatus.BAD_REQUEST, "CREATUREY4001", "존재하지 않는 생물입니다."),
+    CREATURE_DUPLICATION(HttpStatus.CONFLICT, "CREATURE4002", "이미 도감에 존재하는 생물입니다."),
 
 
     // jwt
@@ -45,6 +46,9 @@ public enum ErrorStatus implements BaseErrorCode {
     INVALID_IMAGE_FILE(HttpStatus.BAD_REQUEST,"IMG4001", "이미지가 존재하지 않습니다."),
     S3_UPLOAD_FAILED(HttpStatus.BAD_REQUEST,"IMG4002", "이미지 인식에 실패했습니다."),
     AI_ANALYSIS_FAILED(HttpStatus.BAD_REQUEST, "IMG4003", "이미지 분석에 실패했습니다."),
+
+    // 위치
+    LOCATION_NOT_FOUND(HttpStatus.BAD_REQUEST, "LOCATION4001", "위치가 존재하지 않습니다."),
 
     // 후원 관련 에러
     EXCEEDED_DONATION(HttpStatus.BAD_REQUEST, "DONATION4001", "후원 가능한 나무 개수를 초과했습니다."),
