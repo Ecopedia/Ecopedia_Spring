@@ -28,7 +28,6 @@ public class HomeService {
 
     private static final int CREATURES_PER_TREE = 10;
     private static final int MONEY_PER_TREE = 5000;
-    private static final String S3_BASE_URL = "https://ecopedia-r.s3.ap-northeast-2.amazonaws.com/";
 
     @Transactional(readOnly = true)
     public HomeResponseDto getHomeData(String authHeader) {
@@ -46,13 +45,15 @@ public class HomeService {
                 .sorted((a, b) -> Long.compare(b.getIdx(), a.getIdx()))
                 .limit(3)
                 .map(c -> {
-                    String imageKey = creatureImgRepository.findFirstByCreatureIdx(c.getIdx())
-                            .map(CreatureImg::getImageKey)
-                            .orElse("");
+                    String imageUrl = creatureImgRepository.findFirstByCreatureIdx(c.getIdx())
+                            .map(CreatureImg::getImageUrl)
+                            .orElse(null);
 
-                    String imageUrl = imageKey.isEmpty() ? S3_BASE_URL + imageKey : null;
-
-                    return new HomeResponseDto.RecentCreature(c.getIdx(), c.getCreatureName(), imageUrl);
+                    return new HomeResponseDto.RecentCreature(
+                            c.getIdx(),
+                            c.getCreatureName(),
+                            imageUrl
+                    );
                 })
                 .toList();
 
