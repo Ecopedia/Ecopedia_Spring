@@ -67,7 +67,7 @@ public class CreatureController {
             // 2. OpenAI Vision 분석
             VerifyImageReturnDto result = verifyImageService.verifyImage(s3Dto.getImageUrl());
 
-            if (result.category.isEmpty() || result.name.isEmpty() || result.description.isEmpty()) {
+            if (result.getCategory().isEmpty() || result.getName().isEmpty() || result.getDescription().isEmpty()) {
                 s3ImageService.deleteFile(s3Dto.imageKey);
                 throw new ErrorHandler(ErrorStatus.AI_ANALYSIS_FAILED);
             }
@@ -121,7 +121,7 @@ public class CreatureController {
             // 2. OpenAI Vision 분석
             VerifyImageReturnDto result = verifyImageService.verifyImage(s3Dto.getImageUrl());
 
-            if (result.category.isEmpty() || result.name.isEmpty() || result.description.isEmpty()) {
+            if (result.getCategory().isEmpty() || result.getName().isEmpty() || result.getDescription().isEmpty()) {
                 s3ImageService.deleteFile(s3Dto.imageKey);
                 throw new ErrorHandler(ErrorStatus.AI_ANALYSIS_FAILED);
             }
