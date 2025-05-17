@@ -46,6 +46,9 @@ public enum ErrorStatus implements BaseErrorCode {
     S3_UPLOAD_FAILED(HttpStatus.BAD_REQUEST,"IMG4002", "이미지 인식에 실패했습니다."),
     AI_ANALYSIS_FAILED(HttpStatus.BAD_REQUEST, "IMG4003", "이미지 분석에 실패했습니다."),
 
+    // 위치
+    LOCATION_NOT_FOUND(HttpStatus.BAD_REQUEST, "LOCATION4001", "위치가 존재하지 않습니다."),
+
     // 후원 관련 에러
     EXCEEDED_DONATION(HttpStatus.BAD_REQUEST, "DONATION4001", "후원 가능한 나무 개수를 초과했습니다."),
     CAMPAIGN_NOT_FOUND(HttpStatus.BAD_REQUEST, "CAMPAIGN4001", "후원의 대상 캠페인을 찾을 수 없습니다.")

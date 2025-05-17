@@ -1,5 +1,6 @@
 package com.ecopedia.server.dto;
 
+import com.ecopedia.server.domain.Location;
 import com.ecopedia.server.domain.enums.CreatureCategory;
 import lombok.Builder;
 import lombok.Data;
@@ -10,7 +11,7 @@ public class ResponseDto {
     @Data
     public static class ImgDto {
         String creatureName;
-        // 주소 넣어야함
+        Location location;
         String category;
         String explain;
     }
@@ -18,11 +19,26 @@ public class ResponseDto {
     @Data
     @Builder
     public static class CreatureDetailResponseDto {
+
         private Long creatureIdx;
         private String creatureName;
         private String creatureExplain;
-        private Double latitude;
-        private Double longitude;
+        private String category;
+
+        private String si;
+        private String gu;
+        private String dong;
+
+        private String imageUrl;
+    }
+
+
+    @Data
+    @Builder
+    public static class CreatureSummaryDto {
+        private Long idx;
+        private String creatureName;
+        private String creatureExplain;
         private CreatureCategory category;
         private String imageUrl;
     }

@@ -7,8 +7,10 @@ import com.ecopedia.server.dto.RequestDto;
 import com.ecopedia.server.dto.ResponseDto;
 import com.ecopedia.server.service.CreatureService;
 import com.ecopedia.server.service.ai.VerifyImageService;
+import com.ecopedia.server.service.location.LocationService;
 import com.ecopedia.server.service.s3.S3ImageService;
 import com.ecopedia.server.web.dto.ai.VerifyImageReturnDto;
+import com.ecopedia.server.web.dto.location.LocationReturnDto;
 import com.ecopedia.server.web.dto.s3.S3ImageReturnDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
@@ -30,6 +32,7 @@ public class CreatureController {
     private final S3ImageService s3ImageService;
     private final VerifyImageService verifyImageService;
     private final CreatureService creatureService;
+    private final LocationService locationService;
 
     @PostMapping(value = "/create", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<?> uploadAndAnalyzeImage(@RequestPart("file") MultipartFile file,
@@ -53,7 +56,10 @@ public class CreatureController {
                 throw new ErrorHandler(ErrorStatus.AI_ANALYSIS_FAILED);
             }
 
-            ImgDto imgDto = VerifyImgToImgConverter.verifyImgToImgConverter(result);
+            LocationReturnDto locDto = locationService.getAdministrativeDong(Double.parseDouble(latitude), Double.parseDouble(longitude));
+
+
+            ImgDto imgDto = VerifyImgToImgConverter.verifyImgToImgConverter(result, locDto);
             return ResponseEntity.ok(ApiResponse.onSuccess(imgDto));
 
         } catch (IOException e) {

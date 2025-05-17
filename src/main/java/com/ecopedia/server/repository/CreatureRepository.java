@@ -14,4 +14,6 @@ public interface CreatureRepository extends JpaRepository<Creature, Long> {
 
     List<Creature> findAllByBookIdAndCategory(Long bookId, CreatureCategory category);
     List<Creature> findByBook_Member(Member member);
+
+
 }
