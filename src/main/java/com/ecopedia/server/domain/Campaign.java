@@ -12,7 +12,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-public class Campain extends BaseEntity {
+public class Campaign extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,7 +24,7 @@ public class Campain extends BaseEntity {
     @Column(nullable = false, columnDefinition = "TEXT")
     private String description;
 
-    @OneToMany(mappedBy = "campain", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "campaign", cascade = CascadeType.ALL)
     private List<Donation> donations = new ArrayList<>();
 }
 
