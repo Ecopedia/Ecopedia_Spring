@@ -22,7 +22,7 @@ import java.util.Map;
 import java.util.Optional;
 
 @Slf4j
-@RestControllerAdvice(annotations = {RestController.class})
+@RestControllerAdvice(annotations = {RestController.class}, basePackages ={"BookController.class, HomeController.class, CreatureController.class"})
 public class ExceptionAdvice extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler
