@@ -7,6 +7,7 @@ import com.ecopedia.server.domain.Creature;
 import com.ecopedia.server.domain.Donation;
 import com.ecopedia.server.domain.CreatureImg;
 import com.ecopedia.server.domain.Member;
+import com.ecopedia.server.global.auth.MemberUtil;
 import com.ecopedia.server.repository.*;
 import com.ecopedia.server.web.dto.HomeResponseDto;
 import lombok.RequiredArgsConstructor;
@@ -23,13 +24,15 @@ public class HomeService {
     private final DonationRepository donationRepository;
     private final CampaignRepository campaignRepository;
     private final CreatureImgRepository creatureImgRepository;
+    private final MemberUtil memberUtil;
 
     private static final int CREATURES_PER_TREE = 10;
     private static final int MONEY_PER_TREE = 5000;
     private static final String S3_BASE_URL = "https://ecopedia-r.s3.ap-northeast-2.amazonaws.com/";
 
     @Transactional(readOnly = true)
-    public HomeResponseDto getHomeData(Member member) {
+    public HomeResponseDto getHomeData(String authHeader) {
+        Member member = memberUtil.getMemberFromToken(authHeader);
         List<Creature> creatures = creatureRepository.findByBook_Member(member);
 
         int savedCount = creatures.size();
@@ -61,7 +64,9 @@ public class HomeService {
     }
 
     @Transactional
-    public HomeResponseDto.DonationResult donateTree(Member member) {
+    public HomeResponseDto.DonationResult donateTree(String authHeader) {
+
+        Member member = memberUtil.getMemberFromToken(authHeader);
 
         List<Creature> creatures = creatureRepository.findByBook_Member(member);
         int savedCount = creatures.size();

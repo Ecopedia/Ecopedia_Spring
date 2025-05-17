@@ -7,10 +7,7 @@ import com.ecopedia.server.service.HomeService;
 import com.ecopedia.server.web.dto.HomeResponseDto;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/v1")
@@ -21,14 +18,12 @@ public class HomeController {
 
     // 홈 화면 조회 API
     @GetMapping("/home")
-    public ApiResponse<HomeResponseDto> getHome(HttpServletRequest request) {
-        Member member = (Member) request.getAttribute(JwtAuthInterceptor.MEMBER_ATTR);
-        return ApiResponse.onSuccess(homeService.getHomeData(member));
+    public ApiResponse<HomeResponseDto> getHome(@RequestHeader("Authorization") String authHeader) {
+        return ApiResponse.onSuccess(homeService.getHomeData(authHeader));
     }
 
     @PostMapping("/donation/trees")
-    public ApiResponse<HomeResponseDto.DonationResult> donateTree(HttpServletRequest request) {
-        Member member = (Member) request.getAttribute(JwtAuthInterceptor.MEMBER_ATTR);
-        return ApiResponse.onSuccess(homeService.donateTree(member));
+    public ApiResponse<HomeResponseDto.DonationResult> donateTree(@RequestHeader("Authorization") String authHeader) {
+        return ApiResponse.onSuccess(homeService.donateTree(authHeader));
     }
 }
