@@ -35,12 +35,12 @@ public class HomeService {
         Member member = memberUtil.getMemberFromToken(authHeader);
         List<Creature> creatures = creatureRepository.findByBook_Member(member);
 
-        int savedCount = creatures.size();
-        int availableTrees = savedCount / CREATURES_PER_TREE;
-        int progress = savedCount % CREATURES_PER_TREE;
-
         int donatedCount = donationRepository.countByMember(member);
         int donatedWon = donatedCount * MONEY_PER_TREE;
+
+        int savedCount = creatures.size();  // 지금까지 저장된 생물 개수
+        int availableTrees = savedCount / CREATURES_PER_TREE - donatedCount;
+        int progress = savedCount % CREATURES_PER_TREE;
 
         List<HomeResponseDto.RecentCreature> recent = creatures.stream()
                 .sorted((a, b) -> Long.compare(b.getIdx(), a.getIdx()))
