@@ -31,6 +31,9 @@ public enum ErrorStatus implements BaseErrorCode {
     // 카테고리
     INVALID_CATEGORY(HttpStatus.BAD_REQUEST, "CATEGORY4001", "존재하지 않는 카테고리입니다."),
 
+    // 생명관련
+    CREATURE_NOT_FOUND(HttpStatus.BAD_REQUEST, "CREATUREY4001", "존재하지 않는 생물입니다."),
+
 
     // jwt
     JWT_NOT_FOUND(HttpStatus.UNAUTHORIZED, "JWT401", "토큰이 존재하지 않습니다."),
@@ -38,6 +41,10 @@ public enum ErrorStatus implements BaseErrorCode {
     JWT_INVALID(HttpStatus.UNAUTHORIZED, "JWT403", "유효하지 않은 토큰입니다."),
     JWT_EXPIRED(HttpStatus.UNAUTHORIZED, "JWT404", "토큰이 만료되었습니다."),
 
+    // 이미지 관련
+    INVALID_IMAGE_FILE(HttpStatus.BAD_REQUEST,"IMG4001", "이미지가 존재하지 않습니다."),
+    S3_UPLOAD_FAILED(HttpStatus.BAD_REQUEST,"IMG4002", "이미지 인식에 실패했습니다."),
+    AI_ANALYSIS_FAILED(HttpStatus.BAD_REQUEST, "IMG4003", "이미지 분석에 실패했습니다."),
 
     // 후원 관련 에러
     EXCEEDED_DONATION(HttpStatus.BAD_REQUEST, "DONATION4001", "후원 가능한 나무 개수를 초과했습니다."),

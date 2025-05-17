@@ -18,7 +18,7 @@ public class CreatureImg {
 
     private String imageKey;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "creature_idx")
     private Creature creature;
 
