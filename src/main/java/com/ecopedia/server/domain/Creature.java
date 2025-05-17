@@ -32,7 +32,7 @@ public class Creature {
     private CreatureCategory category;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "book_idx")
+    @JoinColumn(name = "book_id")
     private Book book;
 
     @ManyToOne(fetch = FetchType.LAZY)

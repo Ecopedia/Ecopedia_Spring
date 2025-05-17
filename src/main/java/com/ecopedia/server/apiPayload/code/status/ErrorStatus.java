@@ -25,6 +25,11 @@ public enum ErrorStatus implements BaseErrorCode {
     NICKNAME_LENGTH_TOO_LONG(HttpStatus.BAD_REQUEST, "MEMBER4003", "10글자 이내로 닉네임을 설정해주세요."),
     PASSWORD_WRONG(HttpStatus.BAD_REQUEST, "MEMBER4004", "비밀번호가 틀렸습니다."),
 
+    // 도감
+    BOOK_NOT_FOUND(HttpStatus.BAD_REQUEST, "BOOK4001", "도감이 존재하지 않습니다."),
+
+    // 카테고리
+    INVALID_CATEGORY(HttpStatus.BAD_REQUEST, "CATEGORY4001", "존재하지 않는 카테고리입니다."),
 
     // jwt
     JWT_NOT_FOUND(HttpStatus.UNAUTHORIZED, "JWT401", "토큰이 존재하지 않습니다."),

@@ -6,6 +6,7 @@ import com.ecopedia.server.apiPayload.exception.handler.ErrorHandler;
 import com.ecopedia.server.global.auth.authDto.LoginRequest;
 import com.ecopedia.server.global.auth.authDto.SignupRequest;
 import com.ecopedia.server.repository.MemberRepository;
+import com.ecopedia.server.service.BookService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +24,7 @@ import java.util.Collections;
 public class AuthController {
 
     private final MemberRepository memberRepository;
+    private final BookService bookService;
     private final PasswordUtil passwordUtil;
     private final JwtUtil jwtUtil;
 
@@ -45,7 +47,9 @@ public class AuthController {
                 .password(hashedPassword)
                 .build();
 
-        memberRepository.save(member);
+        Member saveMember = memberRepository.save(member);
+
+        bookService.createBookForMember(saveMember);
         return ResponseEntity.ok(ApiResponse.onSuccess("회원가입이 완료되었습니다."));
     }
 
