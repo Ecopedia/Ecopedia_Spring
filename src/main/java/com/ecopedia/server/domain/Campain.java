@@ -27,3 +27,4 @@ public class Campain extends BaseEntity {
     @OneToMany(mappedBy = "campain", cascade = CascadeType.ALL)
     private List<Donation> donations = new ArrayList<>();
 }
+
