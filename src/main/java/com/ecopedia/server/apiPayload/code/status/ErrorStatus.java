@@ -29,7 +29,7 @@ public enum ErrorStatus implements BaseErrorCode {
     JWT_NOT_FOUND(HttpStatus.UNAUTHORIZED, "JWT401", "토큰이 존재하지 않습니다."),
     JWT_INVALID_FORMAT(HttpStatus.UNAUTHORIZED, "JWT402", "토큰 형식이 유효하지 않습니다."),
     JWT_INVALID(HttpStatus.UNAUTHORIZED, "JWT403", "유효하지 않은 토큰입니다."),
-    JWT_EXPIRED(HttpStatus.UNAUTHORIZED, "JWT404", "토큰이 만료되었습니다.")
+    JWT_EXPIRED(HttpStatus.UNAUTHORIZED, "JWT404", "토큰이 만료되었습니다."),
 
 
     // 후원 관련 에러
