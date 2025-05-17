@@ -23,5 +23,19 @@ spring:
         hbm2ddl:
           auto: update
         default_batch_fetch_size: 1000
+
+# GPT 설정
+openai:
+  api:
+    key: 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
+    url: https://api.openai.com/v1/images/generations
 jwt:
   secret: asfegefdwe14234trgw3c254
+
+aws:
+  s3:
+    bucket: ecopedia-r
+    region: ap-northeast-2 # 서울
+
+s3-access-key: AKIAXEVXYVL2CJ6PSV4I
+s3-secret-key: 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
