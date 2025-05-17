@@ -18,6 +18,7 @@ import com.ecopedia.server.service.s3.S3ImageService;
 import com.ecopedia.server.web.dto.ai.VerifyImageReturnDto;
 import com.ecopedia.server.web.dto.location.LocationReturnDto;
 import com.ecopedia.server.web.dto.s3.S3ImageReturnDto;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -45,6 +46,7 @@ public class CreatureController {
     private final BookRepository bookRepository;
     private final CreatureRepository creatureRepository;
 
+    @Operation(summary = "사진 검증 API")
     @PostMapping(value = "/validation", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<?> uploadAndAnalyzeImage(
             @RequestHeader("Authorization") String authHeader,
@@ -97,6 +99,7 @@ public class CreatureController {
 
     }
 
+    @Operation(summary = "사진 저장 API")
     @PostMapping(value = "/save", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<?> saveCreature(
             @RequestHeader("Authorization") String authHeader,
@@ -159,6 +162,7 @@ public class CreatureController {
         
     }
 
+    @Operation(summary = "도감 세부정보 조회 API")
     @GetMapping("/{creatureIdx}")
     public ResponseEntity<?> getCreatureDetail(@PathVariable Long creatureIdx) {
         CreatureDetailResponseDto responseDto = creatureService.getCreatureDetail(creatureIdx);

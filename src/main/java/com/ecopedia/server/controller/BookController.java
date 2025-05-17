@@ -12,6 +12,7 @@ import com.ecopedia.server.global.auth.MemberUtil;
 import com.ecopedia.server.repository.BookRepository;
 import com.ecopedia.server.repository.CreatureRepository;
 import com.ecopedia.server.service.BookService;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -31,6 +32,7 @@ public class BookController {
 
     private final BookRepository bookRepository;
 
+    @Operation(summary = "내 도감 조회 API")
     @GetMapping
     public ResponseEntity<?> getMyCollection(@RequestHeader("Authorization") String authHeader,
                                              @RequestParam(value = "category", required = false) String categoryParam
