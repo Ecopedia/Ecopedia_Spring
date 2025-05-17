@@ -61,7 +61,7 @@ public class AuthController {
         }
 
         if (!passwordUtil.verifyPassword(request.getPassword(), member.getPassword())) {
-            throw new ErrorHandler(ErrorStatus.);
+            throw new ErrorHandler(ErrorStatus.PASSWORD_WRONG);
         }
 
         String token = jwtUtil.generateToken(member.getNickname());
