@@ -1,5 +1,6 @@
 package com.ecopedia.server.global.auth;
 
+import com.ecopedia.server.apiPayload.ApiResponse;
 import com.ecopedia.server.apiPayload.code.status.ErrorStatus;
 import com.ecopedia.server.apiPayload.exception.handler.ErrorHandler;
 import com.ecopedia.server.global.auth.authDto.LoginRequest;
@@ -45,7 +46,7 @@ public class AuthController {
                 .build();
 
         memberRepository.save(member);
-        return ResponseEntity.ok("회원가입성공");
+        return ResponseEntity.ok(ApiResponse.onSuccess("회원가입이 완료되었습니다."));
     }
 
     /**
@@ -65,7 +66,7 @@ public class AuthController {
         }
 
         String token = jwtUtil.generateToken(member.getNickname());
-        return ResponseEntity.ok(Collections.singletonMap("token", token));
+        return ResponseEntity.ok(ApiResponse.onSuccess(Collections.singletonMap("token", token)));
     }
 }
 

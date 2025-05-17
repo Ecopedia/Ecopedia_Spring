@@ -24,8 +24,6 @@ public class Member extends BaseEntity {
     @Column(nullable = false)
     private String password;
 
-    private String birth;
-
     private Integer point;
 
 

@@ -16,9 +16,10 @@ public class CreatureImg {
 
     private String imageUrl;
 
-    private String accessUrl;
+    private String imageKey;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "creature_idx")
     private Creature creature;
 
 
