@@ -59,6 +59,7 @@ public class BookController {
                         .creatureName(creature.getCreatureName())
                         .creatureExplain(creature.getCreatureExplain())
                         .category(creature.getCategory())
+                        .location(creature.getLocation())
                         .imageUrl(
                                 creature.getCreatureImg() != null
                                         ? creature.getCreatureImg().getImageUrl()

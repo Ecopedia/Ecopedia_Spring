@@ -21,4 +21,6 @@ public class Book {
     @JoinColumn(name = "member_idx", unique = true, nullable = false)
     private Member member;
 
+
+
 }

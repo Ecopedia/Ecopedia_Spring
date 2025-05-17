@@ -41,5 +41,6 @@ public class ResponseDto {
         private String creatureExplain;
         private CreatureCategory category;
         private String imageUrl;
+        private Location location;
     }
 }
