@@ -11,3 +11,4 @@ public interface CreatureImgRepository extends JpaRepository<CreatureImg, Long> 
 
     Optional<CreatureImg> findByCreature(Creature creature);
 }
+

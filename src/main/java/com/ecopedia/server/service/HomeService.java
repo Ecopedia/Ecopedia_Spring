@@ -5,10 +5,9 @@ import com.ecopedia.server.apiPayload.exception.handler.ErrorHandler;
 import com.ecopedia.server.domain.Campaign;
 import com.ecopedia.server.domain.Creature;
 import com.ecopedia.server.domain.Donation;
+import com.ecopedia.server.domain.CreatureImg;
 import com.ecopedia.server.domain.Member;
-import com.ecopedia.server.repository.CampaignRepository;
-import com.ecopedia.server.repository.CreatureRepository;
-import com.ecopedia.server.repository.DonationRepository;
+import com.ecopedia.server.repository.*;
 import com.ecopedia.server.web.dto.HomeResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -23,9 +22,11 @@ public class HomeService {
     private final CreatureRepository creatureRepository;
     private final DonationRepository donationRepository;
     private final CampaignRepository campaignRepository;
+    private final CreatureImgRepository creatureImgRepository;
 
     private static final int CREATURES_PER_TREE = 10;
     private static final int MONEY_PER_TREE = 5000;
+    private static final String S3_BASE_URL = "https://ecopedia-r.s3.ap-northeast-2.amazonaws.com/";
 
     @Transactional(readOnly = true)
     public HomeResponseDto getHomeData(Member member) {
@@ -41,8 +42,15 @@ public class HomeService {
         List<HomeResponseDto.RecentCreature> recent = creatures.stream()
                 .sorted((a, b) -> Long.compare(b.getIdx(), a.getIdx()))
                 .limit(3)
-                .map(c -> new HomeResponseDto.RecentCreature(
-                        c.getIdx(), c.getCreatureName(), "TODO:creature-imageUrl"))
+                .map(c -> {
+                    String imageKey = creatureImgRepository.findFirstByCreatureIdx(c.getIdx())
+                            .map(CreatureImg::getImageKey)
+                            .orElse("");
+
+                    String imageUrl = imageKey.isEmpty() ? S3_BASE_URL + imageKey : null;
+
+                    return new HomeResponseDto.RecentCreature(c.getIdx(), c.getCreatureName(), imageUrl);
+                })
                 .toList();
 
         return new HomeResponseDto(
