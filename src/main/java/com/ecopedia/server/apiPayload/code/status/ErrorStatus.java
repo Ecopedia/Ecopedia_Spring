@@ -31,12 +31,17 @@ public enum ErrorStatus implements BaseErrorCode {
     // 카테고리
     INVALID_CATEGORY(HttpStatus.BAD_REQUEST, "CATEGORY4001", "존재하지 않는 카테고리입니다."),
 
+
     // jwt
     JWT_NOT_FOUND(HttpStatus.UNAUTHORIZED, "JWT401", "토큰이 존재하지 않습니다."),
     JWT_INVALID_FORMAT(HttpStatus.UNAUTHORIZED, "JWT402", "토큰 형식이 유효하지 않습니다."),
     JWT_INVALID(HttpStatus.UNAUTHORIZED, "JWT403", "유효하지 않은 토큰입니다."),
-    JWT_EXPIRED(HttpStatus.UNAUTHORIZED, "JWT404", "토큰이 만료되었습니다.")
+    JWT_EXPIRED(HttpStatus.UNAUTHORIZED, "JWT404", "토큰이 만료되었습니다."),
 
+
+    // 후원 관련 에러
+    EXCEEDED_DONATION(HttpStatus.BAD_REQUEST, "DONATION4001", "후원 가능한 나무 개수를 초과했습니다."),
+    CAMPAIGN_NOT_FOUND(HttpStatus.BAD_REQUEST, "CAMPAIGN4001", "후원의 대상 캠페인을 찾을 수 없습니다.")
     ;
 
 

@@ -23,5 +23,14 @@ spring:
         hbm2ddl:
           auto: update
         default_batch_fetch_size: 1000
+
 jwt:
   secret: asfegefdwe14234trgw3c254
+
+aws:
+  s3:
+    bucket: ecopedia-r
+    region: ap-northeast-2 # 서울
+
+s3-access-key: AKIAXEVXYVL2CJ6PSV4I
+s3-secret-key: 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
