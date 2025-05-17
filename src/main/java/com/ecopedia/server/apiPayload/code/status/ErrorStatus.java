@@ -23,7 +23,14 @@ public enum ErrorStatus implements BaseErrorCode {
     MEMBER_NOT_FOUND(HttpStatus.BAD_REQUEST, "MEMBER4001", "유저가 존재하지 않습니다."),
     NICKNAME_ALREADY_EXIST(HttpStatus.BAD_REQUEST, "MEMBER4002", "동일한 닉네임이 존재합니다."),
     NICKNAME_LENGTH_TOO_LONG(HttpStatus.BAD_REQUEST, "MEMBER4003", "10글자 이내로 닉네임을 설정해주세요."),
-    PASSWORD_WRONG(HttpStatus.BAD_REQUEST, "MEMBER4004", "비밀번호가 틀렸습니다.")
+    PASSWORD_WRONG(HttpStatus.BAD_REQUEST, "MEMBER4004", "비밀번호가 틀렸습니다."),
+
+
+    // jwt
+    JWT_NOT_FOUND(HttpStatus.UNAUTHORIZED, "JWT401", "토큰이 존재하지 않습니다."),
+    JWT_INVALID_FORMAT(HttpStatus.UNAUTHORIZED, "JWT402", "토큰 형식이 유효하지 않습니다."),
+    JWT_INVALID(HttpStatus.UNAUTHORIZED, "JWT403", "유효하지 않은 토큰입니다."),
+    JWT_EXPIRED(HttpStatus.UNAUTHORIZED, "JWT404", "토큰이 만료되었습니다.")
 
     ;
 
