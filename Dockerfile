@@ -1,15 +1,24 @@
-# Use the Eclipse temurin alpine official image
-# https://hub.docker.com/_/eclipse-temurin
+# 1. Use Eclipse Temurin base image
 FROM eclipse-temurin:21-jdk-alpine
 
-# Create and change to the app directory.
+# 2. Set working directory
 WORKDIR /app
 
-# Copy local code to the container image.
-COPY . ./
+# 3. Copy Gradle wrapper scripts and settings first
+COPY gradlew .
+COPY gradle gradle
+COPY build.gradle .
+COPY settings.gradle .
+# (필요한 경우 build.gradle.kts, settings.gradle.kts도 포함)
 
-# Build the app.
-RUN ./mvnw -DoutputFile=target/mvn-dependency-list.log -B -DskipTests clean dependency:list install
+# 4. 권한 부여 (gradlew가 실행되지 않는 오류 방지)
+RUN chmod +x gradlew
 
-# Run the app by dynamically finding the JAR file in the target directory
-CMD ["sh", "-c", "java -jar target/*.jar"]
+# 5. Copy source code
+COPY src src
+
+# 6. Build the app (Spring Boot fat jar)
+RUN ./gradlew clean build -x test
+
+# 7. Run the app
+CMD ["java", "-jar", "build/libs/app.jar"]
