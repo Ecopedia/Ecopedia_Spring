@@ -7,6 +7,5 @@ import lombok.Data;
 @Builder
 public class SignupRequest {
     private String nickname;
-    private String birth;
     private String password;
 }
