@@ -23,8 +23,11 @@ public enum ErrorStatus implements BaseErrorCode {
     MEMBER_NOT_FOUND(HttpStatus.BAD_REQUEST, "MEMBER4001", "유저가 존재하지 않습니다."),
     NICKNAME_ALREADY_EXIST(HttpStatus.BAD_REQUEST, "MEMBER4002", "동일한 닉네임이 존재합니다."),
     NICKNAME_LENGTH_TOO_LONG(HttpStatus.BAD_REQUEST, "MEMBER4003", "10글자 이내로 닉네임을 설정해주세요."),
-    PASSWORD_WRONG(HttpStatus.BAD_REQUEST, "MEMBER4004", "비밀번호가 틀렸습니다.")
+    PASSWORD_WRONG(HttpStatus.BAD_REQUEST, "MEMBER4004", "비밀번호가 틀렸습니다."),
 
+    // 후원 관련 에러
+    EXCEEDED_DONATION(HttpStatus.BAD_REQUEST, "DONATION4001", "후원 가능한 나무 개수를 초과했습니다."),
+    CAMPAIGN_NOT_FOUND(HttpStatus.BAD_REQUEST, "CAMPAIGN4001", "후원의 대상 캠페인을 찾을 수 없습니다.")
     ;
 
 
